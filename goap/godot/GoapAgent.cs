@@ -3,23 +3,29 @@ using System;
 using ReGoap.Core;
 using System.Collections.Generic;
 
-public class GoapAgent<T, W> : Node2D, IReGoapAgent<T, W>
+public class GoapAgent<T, W> : IReGoapAgent<T, W>
 {
     protected bool isActive = true;
     protected List<IReGoapGoal<T, W>> goals;
     protected List<IReGoapAction<T, W>> actions;
-    protected IReGoapMemory<T, W> memory; // TODO Initialize Memory
+    protected IReGoapMemory<T, W> memory;
     protected IReGoapGoal<T, W> currentGoal; // TODO: set on planning done
     protected List<ReGoapActionState<T, W>> startingPlan;
     protected Dictionary<T, W> planValues;
 
+    public GoapAgent(
+        IReGoapMemory<T, W> _memory,
+        List<IReGoapAction<T, W>> _actions,
+        List<IReGoapGoal<T, W>> _goals)
+    {
+        memory = _memory;
+        actions = _actions;
+        goals = _goals;
+    }
+
     public virtual bool IsActive()
     {
         return isActive;
-    }
-    public virtual IReGoapMemory<T, W> GetGoapMemory()
-    {
-        return memory;
     }
 
     public virtual IReGoapGoal<T, W> GetCurrentGoal()

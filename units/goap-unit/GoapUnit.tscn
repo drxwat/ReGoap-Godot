@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://units/goap-unit/GoapUnit.cs" type="Script" id=1]
+
+[node name="GoapUnit" type="KinematicBody2D"]
+script = ExtResource( 1 )
