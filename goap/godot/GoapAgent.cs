@@ -9,7 +9,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
     protected List<IReGoapGoal<T, W>> goals;
     protected List<IReGoapAction<T, W>> actions;
     protected IReGoapMemory<T, W> memory;
-    protected IReGoapGoal<T, W> currentGoal; // TODO: set on planning done
+    protected IReGoapGoal<T, W> currentGoal; // TODO: set on planning done see OnDonePlanning, CalculateNewGoal
     protected List<ReGoapActionState<T, W>> startingPlan;
     protected Dictionary<T, W> planValues;
 
