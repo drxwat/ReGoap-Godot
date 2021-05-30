@@ -12,4 +12,8 @@ position = Vector2( -1.54539, 0.311722 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
-[node name="AgentMemory" parent="." instance=ExtResource( 3 )]
+[node name="AI" type="Node" parent="."]
+
+[node name="AgentMemory" parent="AI" instance=ExtResource( 3 )]
+
+[node name="Sensors" type="Node" parent="AI"]
