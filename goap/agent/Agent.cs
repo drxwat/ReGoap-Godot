@@ -1,5 +1,3 @@
-using Godot;
-using System;
 using ReGoap.Core;
 using System.Collections.Generic;
 

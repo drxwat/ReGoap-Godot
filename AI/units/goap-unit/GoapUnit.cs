@@ -10,6 +10,8 @@ public class GoapUnit : KinematicBody2D
 
     protected List<IReGoapGoal<string, object>> availableGoals;
 
+    protected AgentMemory agentMemory;
+
     protected MoveToPointSystem moveToPointSystem = new MoveToPointSystem();
     public override void _Ready()
     {
@@ -18,14 +20,14 @@ public class GoapUnit : KinematicBody2D
         availableActions.Add(new GoToAction(this.moveToPointSystem));
         availableGoals = new List<IReGoapGoal<string, object>>(); // #TODO: fill list with goals subclasses
 
-        var goapAgentMemory = new GoapMemory<string, object>();
-        goapAgent = new Agent("GoapUnit" ,goapAgentMemory, availableActions, availableGoals);
+        agentMemory = GetNode<AgentMemory>("AgentMemory");
+        goapAgent = new Agent("GoapUnit" , agentMemory.Memory , availableActions, availableGoals);
     }
 
     public override void _PhysicsProcess(float delta)
     {
         if (moveToPointSystem.isActive) {
-            moveToPointSystem.Move(this, 30);
+            moveToPointSystem.Move(this, 100);
         }
     }
 
