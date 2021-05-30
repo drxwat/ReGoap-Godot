@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://GOAP.cs" type="Script" id=1]
+[ext_resource path="res://AI/units/goap-unit/GoapUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilesets/wall-1-tilests.tres" type="TileSet" id=2]
 [ext_resource path="res://tilesets/ground-1-tileset.tres" type="TileSet" id=3]
 [ext_resource path="res://assets/location/decorative_props.png" type="Texture" id=4]
+[ext_resource path="res://GOAP.cs" type="Script" id=5]
+[ext_resource path="res://goap/planner_manager/PlanManager.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "decorative_props.png 0"
@@ -106,7 +108,9 @@
 6/z_index = 0
 
 [node name="GOAP" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource( 5 )
+
+[node name="PlanManager" parent="." instance=ExtResource( 6 )]
 
 [node name="Ground" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -129,3 +133,9 @@ tile_data = PoolIntArray( 65532, 5, 0, 0, 5, 0, 196606, 1, 0, 327676, 6, 0, 2621
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( -8, 236 )
 current = true
+
+[node name="GoapUnit" parent="." instance=ExtResource( 1 )]
+position = Vector2( -25.2269, 190.043 )
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( -397.782, 356.402 )

@@ -6,16 +6,18 @@ using System.Collections.Generic;
 
 public class GoToAction : GoapAction<string, object>
 {
-    // TOOD: PASS NAVIGATOR TO CONSTRUCTOR
-    public GoToAction() : base("GoToAction") { }
-
+    protected MoveToPointSystem moveToPointSystem;
+    public GoToAction(MoveToPointSystem mtps) : base("GoToAction") { 
+        moveToPointSystem = mtps;
+    }
 
     public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
     {
         base.Run(previous, next, settings, goalState, done, fail);
-        OnDoneMovement();
-        // if (settings.TryGetValue("objectivePosition", out var v))
-        //     smsGoto.GoTo((Vector3)v, OnDoneMovement, OnFailureMovement);
+        if (settings.TryGetValue("objectivePosition", out var v)) {
+            var targetPosition = (Vector2)v;
+            moveToPointSystem.Activate(targetPosition, OnDoneMovement);
+        }
         // else
         //     failCallback(this);
     }
