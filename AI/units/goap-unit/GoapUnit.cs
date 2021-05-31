@@ -20,18 +20,20 @@ public class GoapUnit : KinematicBody2D
         availableActions.Add(new GoToAction(this.moveToPointSystem));
         availableGoals = new List<IReGoapGoal<string, object>>(); // #TODO: fill list with goals subclasses
 
-        agentMemory = GetNode<AgentMemory>("AgentMemory");
-        goapAgent = new Agent("GoapUnit" , agentMemory.Memory , availableActions, availableGoals);
+        agentMemory = GetNode<AgentMemory>("AI/AgentMemory");
+        goapAgent = new Agent("GoapUnit", agentMemory.Memory, availableActions, availableGoals);
     }
 
     public override void _PhysicsProcess(float delta)
     {
-        if (moveToPointSystem.isActive) {
+        if (moveToPointSystem.isActive)
+        {
             moveToPointSystem.Move(this, 100);
         }
     }
 
-    public void setGoal(GoapGoal<string, object> goal) {
+    public void setGoal(GoapGoal<string, object> goal)
+    {
         GD.Print("SET GOAL GO_TO");
         var newGals = new List<IReGoapGoal<string, object>>();
         newGals.Add(goal);

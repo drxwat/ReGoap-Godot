@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://goap/agent_memory/AgentMemory.tscn" type="PackedScene" id=3]
+[ext_resource path="res://AI/sensors/agent_bag_sensor/AgentBagSensor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://AI/subsystems/bag/Bag.tscn" type="PackedScene" id=5]
+[ext_resource path="res://AI/sensors/item_locator_sensor/ItemLocatorSensor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://AI/subsystems/items_vision/ItemsVision.tscn" type="PackedScene" id=7]
 
 [node name="GoapUnit" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -12,8 +16,15 @@ position = Vector2( -1.54539, 0.311722 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
+[node name="ItemsVision" parent="." instance=ExtResource( 7 )]
+
+[node name="Bag" parent="." instance=ExtResource( 5 )]
+
 [node name="AI" type="Node" parent="."]
 
 [node name="AgentMemory" parent="AI" instance=ExtResource( 3 )]
 
-[node name="Sensors" type="Node" parent="AI"]
+[node name="AgentBagSensor" parent="AI/AgentMemory" instance=ExtResource( 4 )]
+bagNode = NodePath("../../../Bag")
+
+[node name="ItemLocatorSensor" parent="AI/AgentMemory" instance=ExtResource( 6 )]

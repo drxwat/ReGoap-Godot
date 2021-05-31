@@ -1,21 +1,20 @@
-using ReGoap.Core;
 using Godot;
 using System.Linq;
 
 public class AgentMemory : Node
 {
     public GoapMemory<string, object> Memory = new GoapMemory<string, object>();
-    private IReGoapSensor<string, object>[] sensors;
+    private AgentSensor[] sensors;
 
     public float SensorsUpdateDelay = 0.3f;
     private float sensorsUpdateCooldown;
 
     public override void _Ready()
     {
-        sensors = GetChildren().OfType<IReGoapSensor<string, object>>().ToArray(); // TODO: change to Sensor Node type
-        foreach (var sensor in sensors)
+        sensors = GetChildren().OfType<AgentSensor>().ToArray();
+        foreach (var sensorNode in sensors)
         {
-            sensor.Init(Memory);
+            sensorNode.Sensor.Init(Memory);
         }
     }
 
@@ -25,9 +24,9 @@ public class AgentMemory : Node
         {
             sensorsUpdateCooldown = OS.GetUnixTime() + SensorsUpdateDelay;
 
-            foreach (var sensor in sensors)
+            foreach (var sensorNode in sensors)
             {
-                sensor.UpdateSensor();
+                sensorNode.Sensor.UpdateSensor();
             }
         }
     }
