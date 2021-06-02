@@ -4,32 +4,49 @@ using System.Collections.Generic;
 
 public class ItemsVision : Node2D
 {
+    [Export]
+    public float Radius = 50.0f;
 
-    private List<Action<string, Vector2>> subscribers;
+    private List<Action<Item>> subscribersOnAdd = new List<Action<Item>>();
+    private List<Action<Item>> subscribersOnDelete = new List<Action<Item>>();
 
-    private List<Node2D> knownItems; // TODO: Change to ITEM base class
+
+    private List<Item> knownItems = new List<Item>();
     // TODO: Subscribe On Item Deletion
 
-    public void OnItemDetect(Node2D body) // TODO: Change to ITEM base class
+    public void OnItemDetect(Item item)
     {
-        knownItems.Add(body);
-        foreach (var subscriber in subscribers)
+
+        item.Connect("Deleted", this, "OnItemDeleted", new Godot.Collections.Array { item });
+        knownItems.Add(item);
+        foreach (var onAdd in subscribersOnAdd)
         {
-            subscriber("ITEM_NAME", body.GlobalPosition);
+            onAdd(item);
         }
     }
 
-    public void Subscribe(Action<string, Vector2> callback) // TODO: Add callback on item removal
+    public void Subscribe(Action<Item> onItemAdd, Action<Item> onItemDelete)
     {
         foreach (var item in knownItems)
         {
-            callback("ITEM_NAME", item.GlobalPosition);
+            onItemAdd(item);
         }
-        subscribers.Add(callback);
+        subscribersOnAdd.Add(onItemAdd);
+        subscribersOnDelete.Add(onItemDelete);
     }
 
-    public void UnSubscribe(Action<string, Vector2> callback)
+    public void OnItemDeleted(Item item)
     {
-        subscribers.Remove(callback);
+        foreach (var onDelete in subscribersOnDelete)
+        {
+            onDelete(item);
+        }
+        knownItems.Remove(item);
+    }
+
+    public void UnSubscribe(Action<Item> onItemAdd, Action<Item> onItemDelete)
+    {
+        subscribersOnAdd.Remove(onItemAdd);
+        subscribersOnDelete.Remove(onItemDelete);
     }
 }

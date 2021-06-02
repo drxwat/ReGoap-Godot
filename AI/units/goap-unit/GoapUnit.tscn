@@ -28,3 +28,4 @@ texture = ExtResource( 2 )
 bagNode = NodePath("../../../Bag")
 
 [node name="ItemLocatorSensor" parent="AI/AgentMemory" instance=ExtResource( 6 )]
+itemsVisionNode = NodePath("../../../ItemsVision")

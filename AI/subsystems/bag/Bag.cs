@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Godot;
-public class Bag : Node
+public class Bag : Node // TODO: Change implementaton from polling to reactive. See ItemLocator
 {
     private Dictionary<string, float> items = new Dictionary<string, float>();
 
