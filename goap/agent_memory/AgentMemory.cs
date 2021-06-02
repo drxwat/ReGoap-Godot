@@ -4,14 +4,14 @@ using System.Linq;
 public class AgentMemory : Node
 {
     public GoapMemory<string, object> Memory = new GoapMemory<string, object>();
-    private AgentSensor[] sensors;
+    private IAgentSensor[] sensors;
 
-    public float SensorsUpdateDelay = 0.3f;
-    private float sensorsUpdateCooldown;
+    public ulong SensorsUpdateDelay = 3;
+    private ulong sensorsUpdateCooldown = OS.GetUnixTime();
 
     public override void _Ready()
     {
-        sensors = GetChildren().OfType<AgentSensor>().ToArray();
+        sensors = GetChildren().OfType<IAgentSensor>().ToArray();
         foreach (var sensorNode in sensors)
         {
             sensorNode.Sensor.Init(Memory);
@@ -22,8 +22,7 @@ public class AgentMemory : Node
     {
         if (OS.GetUnixTime() > sensorsUpdateCooldown)
         {
-            sensorsUpdateCooldown = OS.GetUnixTime() + SensorsUpdateDelay;
-
+            sensorsUpdateCooldown = OS.GetUnixTime();
             foreach (var sensorNode in sensors)
             {
                 sensorNode.Sensor.UpdateSensor();

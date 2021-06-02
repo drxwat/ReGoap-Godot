@@ -12,4 +12,8 @@ public class Agent : GoapAgent<string, object>
 
 	}
 
+	public bool ForceCalculateNewGoal() {
+		return CalculateNewGoal(true);
+	}
+
 }

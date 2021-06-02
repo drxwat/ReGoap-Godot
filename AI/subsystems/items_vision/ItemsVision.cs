@@ -2,21 +2,30 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class ItemsVision : Node2D
+[Tool]
+public class ItemsVision : Area2D
 {
     [Export]
-    public float Radius = 50.0f;
+    public float Radius = 250.0f;
 
     private List<Action<Item>> subscribersOnAdd = new List<Action<Item>>();
     private List<Action<Item>> subscribersOnDelete = new List<Action<Item>>();
 
 
     private List<Item> knownItems = new List<Item>();
-    // TODO: Subscribe On Item Deletion
+
+    public override void _Ready()
+    {
+       CollisionShape2D shape = GetNode<CollisionShape2D>("CollisionShape2D");
+       CircleShape2D circle = new CircleShape2D();
+       circle.Radius = Radius;
+       shape.Shape = circle;
+
+       GD.Print(GetOverlappingBodies());
+    }
 
     public void OnItemDetect(Item item)
     {
-
         item.Connect("Deleted", this, "OnItemDeleted", new Godot.Collections.Array { item });
         knownItems.Add(item);
         foreach (var onAdd in subscribersOnAdd)

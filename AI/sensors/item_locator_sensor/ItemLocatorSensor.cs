@@ -1,49 +1,48 @@
 using Godot;
-using System;
 using System.Collections.Generic;
 
-public class ItemLocatorSensor : AgentSensor
+public class ItemLocatorSensor : Node, IAgentSensor
 {
     [Export]
     private NodePath itemsVisionNode;
 
-    new public ItemLocatorGoapSensor Sensor = new ItemLocatorGoapSensor();
+    private GoapSensor<string, object> _sensor; 
+    public GoapSensor<string, object> Sensor {
+        get => _sensor;
+        set => _sensor = value;
+    }
 
     public override void _Ready()
     {
         var itemsVision = GetNode<ItemsVision>(itemsVisionNode);
         if (itemsVision == null)
         {
-            GD.PushWarning("ItemLocatorSensor didn't find ItemsVision node. ItemLocatorSensor wont' work.");
+            GD.PushError("ItemLocatorSensor didn't find ItemsVision node. ItemLocatorSensor wont' work.");
             return;
         }
-        Sensor.ItemsVision = itemsVision;
+        Sensor = new ItemLocatorGoapSensor(itemsVision);
+        
     }
 }
 
 public class ItemLocatorGoapSensor : GoapSensor<string, object>
 {
 
-    public ItemsVision ItemsVision;
+    protected ItemsVision itemsVision;
+
+    public ItemLocatorGoapSensor(ItemsVision _itemsVision) {
+        itemsVision = _itemsVision;
+        EnableSensor();
+    }
 
     public void EnableSensor()
     {
-        if (ItemsVision == null)
-        {
-            GD.PushWarning("Cant' enable ItemLocatorGoapSensor. ItemsVision is not set");
-            return;
-        }
-        ItemsVision.Subscribe(this.OnItemDetected, this.OnItemDeleted);
+        itemsVision.Subscribe(this.OnItemDetected, this.OnItemDeleted);
     }
 
     public void DisableSensor()
     {
-        if (ItemsVision == null)
-        {
-            GD.PushWarning("Cant' disable ItemLocatorGoapSensor. ItemsVision is not set");
-            return;
-        }
-        ItemsVision.UnSubscribe(this.OnItemDetected, this.OnItemDeleted);
+        itemsVision.UnSubscribe(this.OnItemDetected, this.OnItemDeleted);
     }
 
     private void OnItemDetected(Item item)

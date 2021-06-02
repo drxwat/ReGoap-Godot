@@ -5,11 +5,12 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
 
-[node name="ItemsVision" type="Node2D"]
+[node name="ItemsVision" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 1 )
+Radius = 250.0
 
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-[connection signal="body_entered" from="Area2D" to="." method="OnItemDetect"]
+[connection signal="body_entered" from="." to="." method="OnItemDetect"]

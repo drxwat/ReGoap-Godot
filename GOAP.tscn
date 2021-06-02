@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilesets/wall-1-tilests.tres" type="TileSet" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://GOAP.cs" type="Script" id=5]
 [ext_resource path="res://goap/planner_manager/PlanManager.tscn" type="PackedScene" id=6]
 [ext_resource path="res://goap-demo/key/Key.tscn" type="PackedScene" id=7]
+[ext_resource path="res://icon.png" type="Texture" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "decorative_props.png 0"
@@ -136,10 +137,16 @@ position = Vector2( -8, 236 )
 current = true
 
 [node name="GoapUnit" parent="." instance=ExtResource( 1 )]
-position = Vector2( -25.2269, 190.043 )
+position = Vector2( 5.17874, 189.336 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( -397.782, 356.402 )
+position = Vector2( 168.02, 354.022 )
+
+[node name="icon" type="Sprite" parent="Position2D"]
+modulate = Color( 1, 0.72549, 0, 1 )
+position = Vector2( 0.156921, -1.35449 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
 
 [node name="Key" parent="." instance=ExtResource( 7 )]
-position = Vector2( 290.433, 268.161 )
+position = Vector2( 291.885, 262.179 )

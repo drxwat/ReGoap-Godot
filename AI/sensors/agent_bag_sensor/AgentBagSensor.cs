@@ -1,21 +1,26 @@
 
 using Godot;
-public class AgentBagSensor : AgentSensor
+public class AgentBagSensor : Node, IAgentSensor
 {
     [Export]
     private NodePath bagNode;
 
-    new public BagSensor Sensor = new BagSensor();
+    private GoapSensor<string, object> _sensor; 
+    public GoapSensor<string, object> Sensor {
+        get => _sensor;
+        set => _sensor = value;
+    }
 
     public override void _Ready()
     {
         var bag = GetNode<Bag>(bagNode);
         if (bag == null)
         {
-            GD.PushWarning("AgentBagSensor didn't find Bag node. Agent Bag wont' work.");
+            GD.PushError("AgentBagSensor didn't find Bag node. Agent Bag wont' work.");
             return;
         }
-        Sensor.Bag = bag;
+        Sensor = new BagSensor(bag);
+
     }
 
 }
@@ -23,25 +28,25 @@ public class AgentBagSensor : AgentSensor
 
 public class BagSensor : GoapSensor<string, object>
 {
-    public Bag Bag;
+    protected Bag bag;
+
+    public BagSensor(Bag _bag) {
+        bag = _bag;
+    }
 
     public override void UpdateSensor()
     {
-        if (Bag == null)
-        {
-            return;
-        }
         var state = memory.GetWorldState();
-        foreach (var pair in Bag.GetItems())
+        foreach (var pair in bag.GetItems())
         {
             if (pair.Value > 0)
             {
-                state.Set("hasResource" + pair.Key, true);
+                state.Set("hasItem" + pair.Key, true);
             }
             else
             {
-                state.Remove("hasResource" + pair.Key);
-                Bag.ClearItem(pair.Key);
+                state.Remove("hasItem" + pair.Key);
+                bag.ClearItem(pair.Key);
             }
         }
     }

@@ -6,6 +6,7 @@ public class Bag : Node // TODO: Change implementaton from polling to reactive. 
 
     public void AddItem(string itemName, float amount)
     {
+        GD.Print("Item added " + itemName);
         if (!items.ContainsKey(itemName))
             items[itemName] = 0;
         items[itemName] += amount;

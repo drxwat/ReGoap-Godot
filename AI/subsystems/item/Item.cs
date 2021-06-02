@@ -9,7 +9,7 @@ public class Item : Node2D
     [Export]
     public string ItemName = "UnknownItem";
 
-    public void Remove()
+    public void Delete()
     {
         EmitSignal(nameof(Deleted));
         QueueFree();

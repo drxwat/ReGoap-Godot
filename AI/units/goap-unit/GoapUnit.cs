@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GoapUnit : KinematicBody2D
 {
 
-    protected GoapAgent<string, object> goapAgent;
+    public Agent GoapAgent;
     protected List<IReGoapAction<string, object>> availableActions;
 
     protected List<IReGoapGoal<string, object>> availableGoals;
@@ -15,13 +15,15 @@ public class GoapUnit : KinematicBody2D
     protected MoveToPointSystem moveToPointSystem = new MoveToPointSystem();
     public override void _Ready()
     {
-        GD.Print("Unit Created");
-        availableActions = new List<IReGoapAction<string, object>>(); // #TODO: fill list with actions subclasses
+        availableActions = new List<IReGoapAction<string, object>>();
+        foreach(var actionNode in GetNode("AI/Actions").GetChildren()) {
+            availableActions.Add(((IAgentAction)actionNode).GoapAction);
+        }
         availableActions.Add(new GoToAction(this.moveToPointSystem));
-        availableGoals = new List<IReGoapGoal<string, object>>(); // #TODO: fill list with goals subclasses
+        availableGoals = new List<IReGoapGoal<string, object>>();
 
         agentMemory = GetNode<AgentMemory>("AI/AgentMemory");
-        goapAgent = new Agent("GoapUnit", agentMemory.Memory, availableActions, availableGoals);
+        GoapAgent = new Agent("GoapUnit", agentMemory.Memory, availableActions, availableGoals);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -32,12 +34,12 @@ public class GoapUnit : KinematicBody2D
         }
     }
 
-    public void setGoal(GoapGoal<string, object> goal)
+    public void setGoals(List<IReGoapGoal<string, object>> goals)
     {
-        GD.Print("SET GOAL GO_TO");
-        var newGals = new List<IReGoapGoal<string, object>>();
-        newGals.Add(goal);
-        goapAgent.SetGoalsSet(newGals);
+        // GD.Print("SET_GOAL " + goal.Name);
+        // var newGals = new List<IReGoapGoal<string, object>>();
+        // newGals.Add(goal);
+        GoapAgent.SetGoalsSet(goals);
     }
 
 }

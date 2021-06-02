@@ -27,7 +27,6 @@ public class ReGoapPlannerManager<T, W> : Node
 
     public override void _Ready()
     {
-        GD.Print("Planner Created");
         ReGoapNode<T, W>.Warmup(NodeWarmupCount);
         ReGoapState<T, W>.Warmup(StatesWarmupCount);
 

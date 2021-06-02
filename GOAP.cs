@@ -1,5 +1,6 @@
 using Godot;
-using System;
+using ReGoap.Core;
+using System.Collections.Generic;
 
 public class GOAP : Node2D
 {
@@ -12,7 +13,23 @@ public class GOAP : Node2D
         unit = GetNode<GoapUnit>("GoapUnit");
         targetPosition = GetNode<Position2D>("Position2D");
 
-        unit.setGoal(new MoveToGoal(targetPosition.GlobalPosition));
+        // var goals = new List<IReGoapGoal<string, object>>();
+        // goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
+        // goals.Add(new HasItem("Key"));
+        // unit.setGoals(goals);
+    }
+
+    public override void _Process(float delta)
+    {
+        if (Input.IsActionJustPressed("start"))
+        {
+            GD.Print("START!");
+            var goals = new List<IReGoapGoal<string, object>>();
+            goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
+            goals.Add(new HasItem("Key"));
+            unit.setGoals(goals);
+			unit.GoapAgent.ForceCalculateNewGoal();
+        }
     }
 
 }

@@ -18,7 +18,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
     protected Dictionary<T, W> planValues;
     protected ReGoapActionState<T, W> currentActionState;
 
-    protected Dictionary<IReGoapGoal<T, W>, float> goalBlacklist = new Dictionary<IReGoapGoal<T, W>, float>();
+    protected Dictionary<IReGoapGoal<T, W>, ulong> goalBlacklist = new Dictionary<IReGoapGoal<T, W>, ulong>();
     protected List<IReGoapGoal<T, W>> possibleGoals;
     protected bool possibleGoalsDirty;
 
@@ -31,7 +31,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 
     protected bool interruptOnNextTransition;
 
-    protected float lastCalculationTime = -100;
+    protected ulong lastCalculationTime = 0;
 
     public GoapAgent(
         string name,
@@ -258,7 +258,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
             return;
         }
         if (BlackListGoalOnFailure)
-            goalBlacklist[currentGoal] = OS.GetUnixTime() + currentGoal.GetErrorDelay();
+            goalBlacklist[currentGoal] = OS.GetUnixTime() + (ulong)currentGoal.GetErrorDelay();
         CalculateNewGoal(true);
     }
 
