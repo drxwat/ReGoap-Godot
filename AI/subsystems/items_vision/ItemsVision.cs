@@ -11,17 +11,19 @@ public class ItemsVision : Area2D
     private List<Action<Item>> subscribersOnAdd = new List<Action<Item>>();
     private List<Action<Item>> subscribersOnDelete = new List<Action<Item>>();
 
+    private List<Action<ItemOpenable>> subscribersOnOpen = new List<Action<ItemOpenable>>();
+
 
     private List<Item> knownItems = new List<Item>();
 
     public override void _Ready()
     {
-       CollisionShape2D shape = GetNode<CollisionShape2D>("CollisionShape2D");
-       CircleShape2D circle = new CircleShape2D();
-       circle.Radius = Radius;
-       shape.Shape = circle;
+        CollisionShape2D shape = GetNode<CollisionShape2D>("CollisionShape2D");
+        CircleShape2D circle = new CircleShape2D();
+        circle.Radius = Radius;
+        shape.Shape = circle;
 
-       GD.Print(GetOverlappingBodies());
+        GD.Print(GetOverlappingBodies());
     }
 
     public void OnItemDetect(Item item)
@@ -32,9 +34,13 @@ public class ItemsVision : Area2D
         {
             onAdd(item);
         }
+        if (item.GetType().Equals(typeof(ItemOpenable)))
+        {
+            item.Connect("Opened", this, "OnItemOpened", new Godot.Collections.Array { item });
+        }
     }
 
-    public void Subscribe(Action<Item> onItemAdd, Action<Item> onItemDelete)
+    public void Subscribe(Action<Item> onItemAdd, Action<Item> onItemDelete, Action<ItemOpenable> onItemOpen)
     {
         foreach (var item in knownItems)
         {
@@ -42,6 +48,15 @@ public class ItemsVision : Area2D
         }
         subscribersOnAdd.Add(onItemAdd);
         subscribersOnDelete.Add(onItemDelete);
+        subscribersOnOpen.Add(onItemOpen);
+    }
+
+    public void OnItemOpened(ItemOpenable item)
+    {
+        foreach (var onOpen in subscribersOnOpen)
+        {
+            onOpen(item);
+        }
     }
 
     public void OnItemDeleted(Item item)
@@ -49,6 +64,11 @@ public class ItemsVision : Area2D
         foreach (var onDelete in subscribersOnDelete)
         {
             onDelete(item);
+        }
+        item.Disconnect("Deleted", this, "OnItemDeleted");
+        if (item.GetType().Equals(typeof(ItemOpenable)))
+        {
+            item.Disconnect("Opened", this, "OnItemOpened");
         }
         knownItems.Remove(item);
     }

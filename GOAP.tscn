@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilesets/wall-1-tilests.tres" type="TileSet" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://goap/planner_manager/PlanManager.tscn" type="PackedScene" id=6]
 [ext_resource path="res://goap-demo/key/Key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
+[ext_resource path="res://goap-demo/chest/Chest.tscn" type="PackedScene" id=9]
 
 [sub_resource type="TileSet" id=1]
 0/name = "decorative_props.png 0"
@@ -132,12 +133,13 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( 65532, 5, 0, 0, 5, 0, 196606, 1, 0, 327676, 6, 0, 262144, 6, 0, 393207, 6, 0, 327685, 0, 0, 327689, 6, 0, 393229, 0, 0, 524293, 0, 0, 524299, 0, 0, 720879, 5, 0, 720889, 0, 0, 786418, 0, 0, 917495, 6, 0 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -8, 236 )
-current = true
-
 [node name="GoapUnit" parent="." instance=ExtResource( 1 )]
 position = Vector2( 5.17874, 189.336 )
+
+[node name="Camera2D" type="Camera2D" parent="GoapUnit"]
+position = Vector2( -13.1787, 46.664 )
+current = true
+zoom = Vector2( 0.5, 0.5 )
 
 [node name="Position2D" type="Position2D" parent="."]
 position = Vector2( 168.02, 354.022 )
@@ -150,3 +152,8 @@ texture = ExtResource( 8 )
 
 [node name="Key" parent="." instance=ExtResource( 7 )]
 position = Vector2( 291.885, 262.179 )
+
+[node name="Chest" parent="." instance=ExtResource( 9 )]
+position = Vector2( -301.667, 182.845 )
+collision_layer = 2
+collision_mask = 0

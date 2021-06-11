@@ -1,15 +1,17 @@
 using Godot;
 
-public class Item : Node2D
+public class Item : KinematicBody2D
 {
 
     [Signal]
-    delegate void Deleted();
+    protected delegate void Deleted();
 
     [Export]
     public string ItemName = "UnknownItem";
 
-    public void Delete()
+    public bool isPickable = true;
+
+    public virtual void Delete()
     {
         EmitSignal(nameof(Deleted));
         QueueFree();

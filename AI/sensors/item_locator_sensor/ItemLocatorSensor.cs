@@ -6,8 +6,9 @@ public class ItemLocatorSensor : Node, IAgentSensor
     [Export]
     private NodePath itemsVisionNode;
 
-    private GoapSensor<string, object> _sensor; 
-    public GoapSensor<string, object> Sensor {
+    private GoapSensor<string, object> _sensor;
+    public GoapSensor<string, object> Sensor
+    {
         get => _sensor;
         set => _sensor = value;
     }
@@ -21,7 +22,7 @@ public class ItemLocatorSensor : Node, IAgentSensor
             return;
         }
         Sensor = new ItemLocatorGoapSensor(itemsVision);
-        
+
     }
 }
 
@@ -30,19 +31,25 @@ public class ItemLocatorGoapSensor : GoapSensor<string, object>
 
     protected ItemsVision itemsVision;
 
-    public ItemLocatorGoapSensor(ItemsVision _itemsVision) {
+    public ItemLocatorGoapSensor(ItemsVision _itemsVision)
+    {
         itemsVision = _itemsVision;
         EnableSensor();
     }
 
     public void EnableSensor()
     {
-        itemsVision.Subscribe(this.OnItemDetected, this.OnItemDeleted);
+        itemsVision.Subscribe(this.OnItemDetected, this.OnItemDeleted, this.OnItemOpened);
     }
 
     public void DisableSensor()
     {
         itemsVision.UnSubscribe(this.OnItemDetected, this.OnItemDeleted);
+    }
+
+    private void OnItemOpened(ItemOpenable item)
+    {
+        // DEPENDS FROM HOW ITEM DROPS IT'S CONTENT THIS CALLBACK CAN BE HELPFULL
     }
 
     private void OnItemDetected(Item item)

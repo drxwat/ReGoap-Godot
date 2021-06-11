@@ -28,7 +28,7 @@ public class GOAP : Node2D
             goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
             goals.Add(new HasItem("Key"));
             unit.setGoals(goals);
-			unit.GoapAgent.ForceCalculateNewGoal();
+            unit.GoapAgent.ForceCalculateNewGoal();
         }
     }
 
