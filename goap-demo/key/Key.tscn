@@ -8,7 +8,7 @@ radius = 15.0
 
 [node name="Key" instance=ExtResource( 2 )]
 collision_mask = 2
-ItemName = "Key"
+itemType = 1
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 modulate = Color( 0.694118, 0.945098, 0, 1 )

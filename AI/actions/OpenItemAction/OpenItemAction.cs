@@ -2,7 +2,6 @@ using Godot;
 using System;
 using ReGoap.Core;
 using System.Collections.Generic;
-using System.Linq;
 
 public class OpenItemAction : Node, IAgentAction
 {
@@ -31,8 +30,8 @@ public class OpenItemAction : Node, IAgentAction
 public class OpenItemGoapAction : GoapAction<string, object>
 {
 
-    private HashSet<string> openableItems;
-    public OpenItemGoapAction(HashSet<string> _openableItems) : base("OpenItemAction")
+    private HashSet<ItemsEnum> openableItems;
+    public OpenItemGoapAction(HashSet<ItemsEnum> _openableItems) : base("OpenItemAction")
     {
         openableItems = _openableItems;
     }
@@ -41,11 +40,10 @@ public class OpenItemGoapAction : GoapAction<string, object>
     {
         base.Run(previous, next, settings, goalState, done, fail);
 
-        if (settings.TryGetValue("itemToOpen", out var _item))
+        if (settings.TryGetValue("openItem", out var _item))
         {
-            // var item = ((Item)_item);
-            // bag.AddItem(item.ItemName, 1);
-            // item.Delete();
+            var item = ((ItemOpenable)_item);
+            item.Open();
             doneCallback(this);
         }
         else
@@ -56,15 +54,17 @@ public class OpenItemGoapAction : GoapAction<string, object>
 
     public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
     {
-        return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("pickUpItem");
+        return base.CheckProceduralCondition(stackData) && 
+            stackData.settings.HasKey("openItem") && 
+            stackData.settings.HasKey("dropItem");
     }
 
     public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
     {
         preconditions.Clear();
-        if (stackData.settings.TryGetValue("pickUpItem", out var item))
+        if (stackData.settings.TryGetValue("openItem", out var openItem))
         {
-            preconditions.Set("isAtPosition", ((Item)item).GlobalPosition);
+            preconditions.Set("isAtPosition", ((ItemOpenable)openItem).GlobalPosition);
         }
         return preconditions;
     }
@@ -72,9 +72,9 @@ public class OpenItemGoapAction : GoapAction<string, object>
     public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
     {
         effects.Clear();
-        if (stackData.settings.TryGetValue("pickUpItem", out var item))
+        if (stackData.settings.TryGetValue("dropItem", out var itemName))
         {
-            effects.Set("hasItem" + ((Item)item).ItemName, true);
+            effects.Set("hasItem" + (string)itemName, true);
         }
         return base.GetEffects(stackData);
     }
@@ -83,37 +83,30 @@ public class OpenItemGoapAction : GoapAction<string, object>
     {
         settings.Clear();
         var neededItemName = getNeededItemFromGoal(stackData.goalState);
-        foreach (var openableName in openableItems)
-        {
-            var openables = (List<ItemOpenable>)stackData.currentState.Get(openableName);
-            foreach (var openable in openables)
-            {
-                if (openable.isOpened)
-                {
-                    continue;
-                }
-                if (openable.possibleDrop.Contains(neededItemName))
-                {
-                    // TODO: Set all openable items that drop needed item
-                }
-            }
-        }
-
-        if (neededItemName == null || !stackData.currentState.HasKey(neededItemName))
-        {
+        if (neededItemName == null) {
             return base.GetSettings(stackData);
         }
 
-        // Getting known items list from world state
-        var items = (List<Item>)stackData.currentState.Get(neededItemName);
-        Vector2 agentPosition = Vector2.Zero;
-
-        // TODO: Find Clothest item
-        if (items.Count() > 0)
+        var neededItemType = ItemHelper.GetItemTypeByName(neededItemName);
+        foreach (var openableType in openableItems)
         {
-            settings.Set("pickUpItem", items[0]);
+            // Iterating over all types of openable items
+            var openables = (List<Item>)stackData.currentState.Get(ItemHelper.GetItemNameByType(openableType));
+            foreach (var openable in openables)
+            {
+                ItemOpenable openableItem = (ItemOpenable)openable;
+                if (openableItem.isOpened)
+                {
+                    continue;
+                }
+                if (openableItem.possibleDrop.Contains(neededItemType))
+                {
+                    // TODO: Set all openable items that drop needed item
+                    settings.Set("openItem", openableItem);
+                    settings.Set("dropItem", neededItemName);
+                }
+            }
         }
-
         return base.GetSettings(stackData);
     }
 

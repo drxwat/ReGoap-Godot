@@ -154,6 +154,6 @@ texture = ExtResource( 8 )
 position = Vector2( 291.885, 262.179 )
 
 [node name="Chest" parent="." instance=ExtResource( 9 )]
-position = Vector2( -301.667, 182.845 )
+position = Vector2( -160.388, 235.229 )
 collision_layer = 2
 collision_mask = 0

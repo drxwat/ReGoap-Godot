@@ -7,9 +7,9 @@
 extents = Vector2( 15, 10 )
 
 [node name="Chest" instance=ExtResource( 1 )]
-ItemName = "Chest"
-possibleDrop = PoolStringArray( "Key" )
-drop = PoolStringArray( "Key" )
+itemType = 2
+possibleDrop = [ 1 ]
+drop = [ 1 ]
 
 [node name="CollisionShape2D" parent="." index="0"]
 position = Vector2( 0, -9.13443 )

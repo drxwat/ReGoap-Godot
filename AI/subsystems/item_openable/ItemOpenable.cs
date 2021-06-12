@@ -9,10 +9,13 @@ public class ItemOpenable : Item
     protected delegate void Opened();
 
     [Export]
-    public string[] possibleDrop = new string[] { };
+    public Godot.Collections.Array<ItemsEnum> possibleDrop = new Godot.Collections.Array<ItemsEnum> { };
 
     [Export]
-    public string[] drop = new string[] { };
+    public Godot.Collections.Array<ItemsEnum> drop = new Godot.Collections.Array<ItemsEnum> { };
+
+    [Export]
+    public bool isRandomDrop = false;
 
     public bool isOpened = false;
 
@@ -34,8 +37,8 @@ public class ItemOpenable : Item
         {
             GD.PrintErr("/root/AiGlobals is not found");
         }
-        aIGlobals.openableItems.Add(this.Name);
-        HashSet<string> dropSet = new HashSet<string>(drop);
+        aIGlobals.openableItems.Add(this.itemType);
+        HashSet<ItemsEnum> dropSet = new HashSet<ItemsEnum>(drop);
         dropSet.ExceptWith(possibleDrop);
         if (dropSet.Count > 0)
         {
@@ -45,6 +48,7 @@ public class ItemOpenable : Item
 
     public void Open()
     {
+        GD.Print("OPENNING ITEM");
         if (this.isOpened)
         {
             return;
