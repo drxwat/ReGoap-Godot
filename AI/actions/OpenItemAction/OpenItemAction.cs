@@ -2,6 +2,7 @@ using Godot;
 using System;
 using ReGoap.Core;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class OpenItemAction : Node, IAgentAction
 {
@@ -36,15 +37,19 @@ public class OpenItemGoapAction : GoapAction<string, object>
         openableItems = _openableItems;
     }
 
-    public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
+    public async override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
     {
         base.Run(previous, next, settings, goalState, done, fail);
 
         if (settings.TryGetValue("openItem", out var _item))
         {
             var item = ((ItemOpenable)_item);
-            item.Open();
-            doneCallback(this);
+            var isSuccess =  await item.Open();
+            if (isSuccess) {
+                doneCallback(this);
+            } else {
+                failCallback(this);
+            }
         }
         else
         {
@@ -92,6 +97,9 @@ public class OpenItemGoapAction : GoapAction<string, object>
         {
             // Iterating over all types of openable items
             var openables = (List<Item>)stackData.currentState.Get(ItemHelper.GetItemNameByType(openableType));
+            if (openables == null) {
+                continue;
+            }
             foreach (var openable in openables)
             {
                 ItemOpenable openableItem = (ItemOpenable)openable;

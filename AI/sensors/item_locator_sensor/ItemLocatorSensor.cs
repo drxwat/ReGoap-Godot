@@ -74,6 +74,9 @@ public class ItemLocatorGoapSensor : GoapSensor<string, object>
         {
             var items = (List<Item>)_items;
             items.Remove(item);
+            if (items.Count <= 0) {
+                state.Remove(item.ItemName);
+            }
         }
     }
 }

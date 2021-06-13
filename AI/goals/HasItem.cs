@@ -1,6 +1,6 @@
 using Godot;
 
-public class HasItem : GoapGoal<string, object> {
+public class HasItem : GoapGoalAdvanced<string, object> {
 
     public HasItem(string itemName) {
         Name = "HasItem" + itemName;

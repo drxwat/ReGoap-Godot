@@ -87,16 +87,16 @@ public class PickUpItemGoapAction : GoapAction<string, object>
 
         // Getting known items list from world state
         var items = (List<Item>)stackData.currentState.Get(neededItemName);
-        Vector2 agentPosition = Vector2.Zero;
 
-        // TODO: Find Clothest item
-        if (items.Count() > 0)
-        {
-            settings.Set("pickUpItem", items[0]);
+        var results = new List<ReGoapState<string, object>>();
+        foreach(var item in items) {
+            settings.Set("pickUpItem", item);
+            results.Add(settings.Clone());
         }
 
         return base.GetSettings(stackData);
     }
+
 
     protected virtual string getNeededItemFromGoal(ReGoapState<string, object> goalState)
     {

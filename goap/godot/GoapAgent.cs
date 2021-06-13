@@ -8,7 +8,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 {
     public string Name;
     public float CalculationDelay = 0.5f;
-    public bool BlackListGoalOnFailure = true;
+    public bool BlackListGoalOnFailure = false;
     protected bool isActive = true;
     protected List<IReGoapGoal<T, W>> goals;
     protected List<IReGoapAction<T, W>> actions;
@@ -252,6 +252,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 
     public virtual void WarnActionFailure(IReGoapAction<T, W> thisAction)
     {
+        GD.Print("ACTION FAILED " + thisAction);
         if (currentActionState != null && thisAction != currentActionState.Action)
         {
             ReGoapLogger.LogWarning(string.Format("[GoapAgent] Action {0} warned for failure but is not current action.", thisAction));
@@ -264,6 +265,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 
     public virtual void WarnGoalEnd(IReGoapGoal<T, W> goal)
     {
+        GD.Print("GOAL END " + goal);
         if (goal != currentGoal)
         {
             ReGoapLogger.LogWarning(string.Format("[GoapAgent] Goal {0} warned for end but is not current goal.", goal));

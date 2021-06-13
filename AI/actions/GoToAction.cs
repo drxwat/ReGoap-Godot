@@ -58,7 +58,7 @@ public class GoToAction : GoapAction<string, object>
             && stackData.currentState.TryGetValue("isAtPosition", out object isAtPosition))
         {
             if (objectivePosition is Vector3 p && isAtPosition is Vector3 r)
-                distance = (p - r).Length();
+                distance = (p - r).Length(); // TODO: Vector2 Change
         }
         return base.GetCost(stackData) + Cost + distance;
     }

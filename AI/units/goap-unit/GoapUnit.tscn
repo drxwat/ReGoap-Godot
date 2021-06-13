@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.cs" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://AI/subsystems/items_vision/ItemsVision.tscn" type="PackedScene" id=7]
 [ext_resource path="res://AI/actions/PickUpItemAction/PickUpItemAction.tscn" type="PackedScene" id=8]
 [ext_resource path="res://AI/actions/OpenItemAction/OpenItemAction.tscn" type="PackedScene" id=9]
+[ext_resource path="res://AI/sensors/agent_location_sensor/AgentLocationSensor.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 25.0
@@ -38,6 +39,8 @@ bagNode = NodePath("../../../Bag")
 
 [node name="ItemLocatorSensor" parent="AI/AgentMemory" instance=ExtResource( 6 )]
 itemsVisionNode = NodePath("../../../ItemsVision")
+
+[node name="AgentLocationSensor" parent="AI/AgentMemory" instance=ExtResource( 10 )]
 
 [node name="Actions" type="Node" parent="AI"]
 

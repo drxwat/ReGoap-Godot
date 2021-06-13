@@ -36,7 +36,7 @@ public class BagSensor : GoapSensor<string, object>
 
     public override void UpdateSensor()
     {
-        var state = memory.GetWorldState();
+        var state = memory.GetWorldState();        
         foreach (var pair in bag.GetItems())
         {
             if (pair.Value > 0)

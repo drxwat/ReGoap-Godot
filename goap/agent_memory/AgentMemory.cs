@@ -15,6 +15,7 @@ public class AgentMemory : Node
         foreach (var sensorNode in sensors)
         {
             sensorNode.Sensor.Init(Memory);
+            sensorNode.Sensor.UpdateSensor();
         }
     }
 

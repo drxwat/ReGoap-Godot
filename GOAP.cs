@@ -25,7 +25,7 @@ public class GOAP : Node2D
         {
             GD.Print("START!");
             var goals = new List<IReGoapGoal<string, object>>();
-            goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
+            // goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
             goals.Add(new HasItem("Key"));
             unit.setGoals(goals);
             unit.GoapAgent.ForceCalculateNewGoal();

@@ -12,6 +12,7 @@ public class GoapUnit : KinematicBody2D
 
     protected AgentMemory agentMemory;
 
+
     protected MoveToPointSystem moveToPointSystem = new MoveToPointSystem();
     public override void _Ready()
     {
@@ -32,14 +33,21 @@ public class GoapUnit : KinematicBody2D
         {
             moveToPointSystem.Move(this, 100);
         }
+
+        foreach (var goal in availableGoals) {
+            if (goal is GoapGoalAdvanced<string, object>) {
+                ((GoapGoalAdvanced<string, object>)goal).Update();
+            }
+        }
     }
 
     public void setGoals(List<IReGoapGoal<string, object>> goals)
     {
+        availableGoals = goals;
         // GD.Print("SET_GOAL " + goal.Name);
         // var newGals = new List<IReGoapGoal<string, object>>();
         // newGals.Add(goal);
-        GoapAgent.SetGoalsSet(goals);
+        GoapAgent.SetGoalsSet(availableGoals);
     }
 
 }

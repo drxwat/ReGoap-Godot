@@ -1,6 +1,6 @@
 using Godot;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 public class ItemOpenable : Item
 {
@@ -46,12 +46,12 @@ public class ItemOpenable : Item
         }
     }
 
-    public void Open()
+    public async Task<bool> Open()
     {
         GD.Print("OPENNING ITEM");
         if (this.isOpened)
         {
-            return;
+            return false;
         }
         int dropI = 1;
         foreach (var itemKey in drop)
@@ -67,6 +67,8 @@ public class ItemOpenable : Item
         }
         EmitSignal(nameof(Opened));
         isOpened = true;
+        await Task.Delay(500);
+        return true;
     }
 
 }
