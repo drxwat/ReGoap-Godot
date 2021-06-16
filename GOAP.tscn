@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilesets/wall-1-tilests.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/location/decorative_props.png" type="Texture" id=4]
 [ext_resource path="res://GOAP.cs" type="Script" id=5]
 [ext_resource path="res://goap/planner_manager/PlanManager.tscn" type="PackedScene" id=6]
+[ext_resource path="res://goap-demo/key/Key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://goap-demo/chest/Chest.tscn" type="PackedScene" id=9]
 
@@ -149,5 +150,29 @@ position = Vector2( 0.156921, -1.35449 )
 scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 8 )
 
+[node name="Key" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
+position = Vector2( 202.731, 251.607 )
+
+[node name="Key2" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.917647, 0.286275, 0.921569, 1 )
+position = Vector2( 201.05, 194.426 )
+
+[node name="Key3" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.286275, 0.921569, 0.298039, 1 )
+position = Vector2( 181.709, 314.675 )
+
+[node name="Key4" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.921569, 0.419608, 0.286275, 1 )
+position = Vector2( -274.525, 288.455 )
+
+[node name="Key5" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
+position = Vector2( -186.874, 292.201 )
+
+[node name="Key6" parent="." instance=ExtResource( 7 )]
+modulate = Color( 0.286275, 0.847059, 0.921569, 1 )
+position = Vector2( -228.827, 290.702 )
+
 [node name="Chest" parent="." instance=ExtResource( 9 )]
-position = Vector2( -154.038, 214.593 )
+position = Vector2( -155.72, 196.093 )
