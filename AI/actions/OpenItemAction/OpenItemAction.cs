@@ -44,10 +44,13 @@ public class OpenItemGoapAction : GoapAction<string, object>
         if (settings.TryGetValue("openItem", out var _item))
         {
             var item = ((ItemOpenable)_item);
-            var isSuccess =  await item.Open();
-            if (isSuccess) {
+            var isSuccess = await item.Open();
+            if (isSuccess)
+            {
                 doneCallback(this);
-            } else {
+            }
+            else
+            {
                 failCallback(this);
             }
         }
@@ -59,8 +62,8 @@ public class OpenItemGoapAction : GoapAction<string, object>
 
     public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
     {
-        return base.CheckProceduralCondition(stackData) && 
-            stackData.settings.HasKey("openItem") && 
+        return base.CheckProceduralCondition(stackData) &&
+            stackData.settings.HasKey("openItem") &&
             stackData.settings.HasKey("dropItem");
     }
 
@@ -88,16 +91,19 @@ public class OpenItemGoapAction : GoapAction<string, object>
     {
         settings.Clear();
         var neededItemName = getNeededItemFromGoal(stackData.goalState);
-        if (neededItemName == null) {
+        if (neededItemName == null)
+        {
             return base.GetSettings(stackData);
         }
 
         var neededItemType = ItemHelper.GetItemTypeByName(neededItemName);
+        var results = new List<ReGoapState<string, object>>();
         foreach (var openableType in openableItems)
         {
             // Iterating over all types of openable items
             var openables = (List<Item>)stackData.currentState.Get(ItemHelper.GetItemNameByType(openableType));
-            if (openables == null) {
+            if (openables == null)
+            {
                 continue;
             }
             foreach (var openable in openables)
@@ -112,10 +118,11 @@ public class OpenItemGoapAction : GoapAction<string, object>
                     // TODO: Set all openable items that drop needed item
                     settings.Set("openItem", openableItem);
                     settings.Set("dropItem", neededItemName);
+                    results.Add(settings.Clone());
                 }
             }
         }
-        return base.GetSettings(stackData);
+        return results;
     }
 
     protected virtual string getNeededItemFromGoal(ReGoapState<string, object> goalState)
@@ -128,5 +135,17 @@ public class OpenItemGoapAction : GoapAction<string, object>
             }
         }
         return null;
+    }
+
+    public override float GetCost(GoapActionStackData<string, object> stackData)
+    {
+        float AdditinalCost = 0.0f;
+        if (stackData.settings.TryGetValue("openItem", out var openItem))
+        {
+            ItemOpenable itemOpenable = (ItemOpenable)openItem;
+            ItemsEnum itemType = ItemHelper.GetItemTypeByName((string)stackData.settings.Get("dropItem"));
+            AdditinalCost = itemOpenable.GetOpeningCost(itemType);
+        }
+        return base.GetCost(stackData) + AdditinalCost;
     }
 }

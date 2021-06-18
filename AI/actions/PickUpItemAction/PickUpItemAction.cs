@@ -3,6 +3,7 @@ using System;
 using ReGoap.Core;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class PickUpItemAction : Node, IAgentAction
 {
@@ -18,9 +19,12 @@ public class PickUpItemAction : Node, IAgentAction
     }
     public override void _Ready()
     {
-        if (bagNode != null) {
+        if (bagNode != null)
+        {
             GoapAction = new PickUpItemGoapAction(GetNode<Bag>(bagNode));
-        } else {
+        }
+        else
+        {
             GD.PrintErr("BagNode is not set for PickUpItemAction. PickUp behavior won't work");
         }
     }
@@ -32,7 +36,8 @@ public class PickUpItemGoapAction : GoapAction<string, object>
 
     protected Bag bag;
 
-    public PickUpItemGoapAction(Bag _bag) : base("PickUpItemAction") { 
+    public PickUpItemGoapAction(Bag _bag) : base("PickUpItemAction")
+    {
         bag = _bag;
     }
 
@@ -41,12 +46,16 @@ public class PickUpItemGoapAction : GoapAction<string, object>
     {
         base.Run(previous, next, settings, goalState, done, fail);
 
-        if (settings.TryGetValue("pickUpItem", out var _item)) {
+        if (settings.TryGetValue("pickUpItem", out var _item))
+        {
             var item = ((Item)_item);
-            bag.AddItem(item.ItemName, 1);
+            bag.AddItem(item.itemType, 1);
             item.Delete();
+            // await Task.Delay(800);
             doneCallback(this);
-        } else {
+        }
+        else
+        {
             failCallback(this);
         }
     }
@@ -89,12 +98,13 @@ public class PickUpItemGoapAction : GoapAction<string, object>
         var items = (List<Item>)stackData.currentState.Get(neededItemName);
 
         var results = new List<ReGoapState<string, object>>();
-        foreach(var item in items) {
+        foreach (var item in items)
+        {
             settings.Set("pickUpItem", item);
             results.Add(settings.Clone());
         }
 
-        return base.GetSettings(stackData);
+        return results;
     }
 
 

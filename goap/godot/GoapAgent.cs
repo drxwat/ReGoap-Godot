@@ -215,6 +215,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 
     public virtual void WarnActionEnd(IReGoapAction<T, W> thisAction)
     {
+        GD.Print("Action END " + thisAction);
         if (currentActionState != null && thisAction != currentActionState.Action)
             return;
         PushAction();

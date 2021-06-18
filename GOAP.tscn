@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://AI/units/goap-unit/GoapUnit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilesets/wall-1-tilests.tres" type="TileSet" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://goap-demo/key/Key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://goap-demo/chest/Chest.tscn" type="PackedScene" id=9]
+[ext_resource path="res://goap-demo/vase/Vase.tscn" type="PackedScene" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "decorative_props.png 0"
@@ -152,27 +153,43 @@ texture = ExtResource( 8 )
 
 [node name="Key" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
-position = Vector2( 202.731, 251.607 )
+position = Vector2( -329.182, 266.6 )
 
 [node name="Key2" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.917647, 0.286275, 0.921569, 1 )
-position = Vector2( 201.05, 194.426 )
+position = Vector2( 234.285, 173.626 )
 
 [node name="Key3" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.286275, 0.921569, 0.298039, 1 )
-position = Vector2( 181.709, 314.675 )
+position = Vector2( 386.888, 334.856 )
 
 [node name="Key4" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.419608, 0.286275, 1 )
-position = Vector2( -274.525, 288.455 )
+position = Vector2( -365.342, 393.567 )
 
 [node name="Key5" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
-position = Vector2( -186.874, 292.201 )
+position = Vector2( -277.691, 397.313 )
 
 [node name="Key6" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.286275, 0.847059, 0.921569, 1 )
-position = Vector2( -228.827, 290.702 )
+position = Vector2( -319.644, 395.814 )
 
 [node name="Chest" parent="." instance=ExtResource( 9 )]
-position = Vector2( -155.72, 196.093 )
+position = Vector2( -316.116, 227.055 )
+
+[node name="Vase" parent="." instance=ExtResource( 10 )]
+position = Vector2( -105.996, 174.277 )
+drop = [ 1 ]
+isRandomDrop = false
+BaseOpeningCost = 10.0
+RandomCostPenalty = 5.0
+
+[node name="Vase2" parent="." instance=ExtResource( 10 )]
+position = Vector2( -159.632, 177.573 )
+
+[node name="Vase3" parent="." instance=ExtResource( 10 )]
+position = Vector2( -209.984, 189.343 )
+
+[node name="Vase4" parent="." instance=ExtResource( 10 )]
+position = Vector2( -137.212, 368.711 )

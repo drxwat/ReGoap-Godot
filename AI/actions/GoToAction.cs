@@ -7,14 +7,16 @@ using System.Collections.Generic;
 public class GoToAction : GoapAction<string, object>
 {
     protected MoveToPointSystem moveToPointSystem;
-    public GoToAction(MoveToPointSystem mtps) : base("GoToAction") { 
+    public GoToAction(MoveToPointSystem mtps) : base("GoToAction")
+    {
         moveToPointSystem = mtps;
     }
 
     public override void Run(IReGoapAction<string, object> previous, IReGoapAction<string, object> next, ReGoapState<string, object> settings, ReGoapState<string, object> goalState, Action<IReGoapAction<string, object>> done, Action<IReGoapAction<string, object>> fail)
     {
         base.Run(previous, next, settings, goalState, done, fail);
-        if (settings.TryGetValue("objectivePosition", out var v)) {
+        if (settings.TryGetValue("objectivePosition", out var v))
+        {
             var targetPosition = (Vector2)v;
             moveToPointSystem.Activate(targetPosition, OnDoneMovement);
         }
@@ -57,8 +59,8 @@ public class GoToAction : GoapAction<string, object>
         if (stackData.settings.TryGetValue("objectivePosition", out object objectivePosition)
             && stackData.currentState.TryGetValue("isAtPosition", out object isAtPosition))
         {
-            if (objectivePosition is Vector3 p && isAtPosition is Vector3 r)
-                distance = (p - r).Length(); // TODO: Vector2 Change
+            if (objectivePosition is Vector2 p && isAtPosition is Vector2 r)
+                distance = (p - r).Length();
         }
         return base.GetCost(stackData) + Cost + distance;
     }

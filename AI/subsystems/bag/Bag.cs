@@ -1,38 +1,45 @@
 using System.Collections.Generic;
 using Godot;
-public class Bag : Node // TODO: Change implementaton from polling to reactive. See ItemLocator
+public class Bag : Node
 {
-    private Dictionary<string, float> items = new Dictionary<string, float>();
 
-    public void AddItem(string itemName, float amount)
+    [Signal]
+    protected delegate ItemsEnum ItemAdded();
+
+    [Signal]
+    protected delegate ItemsEnum ItemRemoved();
+
+    private Dictionary<ItemsEnum, float> items = new Dictionary<ItemsEnum, float>();
+
+    public void AddItem(ItemsEnum itemType, float amount)
     {
-        GD.Print("Item added " + itemName);
-        if (!items.ContainsKey(itemName))
-            items[itemName] = 0;
-        items[itemName] += amount;
+        GD.Print("Item added to BAG " + ItemHelper.GetItemNameByType(itemType));
+        if (!items.ContainsKey(itemType))
+            items[itemType] = 0;
+        items[itemType] += amount;
+        EmitSignal(nameof(ItemAdded), itemType);
     }
 
-    public float GetItem(string itemName)
+    public float GetItem(ItemsEnum itemType)
     {
         var amount = 0f;
-        items.TryGetValue(itemName, out amount);
+        items.TryGetValue(itemType, out amount);
         return amount;
     }
 
-    public Dictionary<string, float> GetItems()
+    public Dictionary<ItemsEnum, float> GetItems()
     {
         return items;
     }
 
-    public void RemoveItem(string itemName, float amount)
+    public void RemoveItem(ItemsEnum itemType, float amount)
     {
-        items[itemName] -= amount;
-    }
-
-    // We need this method to be called by BagSensor when it updates memory state
-    public void ClearItem(string itemName)
-    {
-        items.Remove(itemName);
+        if (items[itemType] >= 0)
+        {
+            GD.Print("Item removed from BAG " + ItemHelper.GetItemNameByType(itemType));
+            items[itemType] -= amount;
+            EmitSignal(nameof(ItemRemoved), itemType);
+        }
     }
 
 }

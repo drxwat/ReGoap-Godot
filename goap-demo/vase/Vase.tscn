@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://AI/subsystems/item_openable/ItemOpenable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/location/other_props.png" type="Texture" id=2]
+[ext_resource path="res://goap-demo/vase/Vase.cs" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 8.0
+height = 10.0
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 96, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "broken",
+"speed": 5.0
+} ]
+
+[node name="Vase" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+possibleDrop = [ 1 ]
+isRandomDrop = true
+randomDropProbability = [ 0.2 ]
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 0.210224, -10.0908 )
+shape = SubResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
+position = Vector2( 1.26134, -9.24986 )
+frames = SubResource( 3 )
