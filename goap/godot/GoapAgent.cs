@@ -7,7 +7,7 @@ using ReGoap.Utilities;
 public class GoapAgent<T, W> : IReGoapAgent<T, W>
 {
     public string Name;
-    public float CalculationDelay = 0.5f;
+    public ulong CalculationDelay = 500;
     public bool BlackListGoalOnFailure = false;
     protected bool isActive = true;
     protected List<IReGoapGoal<T, W>> goals;
@@ -18,7 +18,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
     protected Dictionary<T, W> planValues;
     protected ReGoapActionState<T, W> currentActionState;
 
-    protected Dictionary<IReGoapGoal<T, W>, ulong> goalBlacklist = new Dictionary<IReGoapGoal<T, W>, ulong>();
+    protected Dictionary<IReGoapGoal<T, W>, uint> goalBlacklist = new Dictionary<IReGoapGoal<T, W>, uint>();
     protected List<IReGoapGoal<T, W>> possibleGoals;
     protected bool possibleGoalsDirty;
 
@@ -128,7 +128,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
                 {
                     possibleGoals.Add(goal);
                 }
-                else if (goalBlacklist[goal] < OS.GetUnixTime())
+                else if (goalBlacklist[goal] < OS.GetTicksMsec())
                 {
                     goalBlacklist.Remove(goal);
                     possibleGoals.Add(goal);
@@ -152,10 +152,9 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
     {
         if (IsPlanning)
             return false;
-        if (!forceStart && (OS.GetUnixTime() - lastCalculationTime <= CalculationDelay))
+        if (!forceStart && (OS.GetTicksMsec() - lastCalculationTime <= CalculationDelay))
             return false;
-        lastCalculationTime = OS.GetUnixTime();
-
+        lastCalculationTime = OS.GetTicksMsec();
         interruptOnNextTransition = false;
         UpdatePossibleGoals();
         //var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -260,7 +259,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
             return;
         }
         if (BlackListGoalOnFailure)
-            goalBlacklist[currentGoal] = OS.GetUnixTime() + (ulong)currentGoal.GetErrorDelay();
+            goalBlacklist[currentGoal] = OS.GetTicksMsec() + (uint)currentGoal.GetErrorDelay();
         CalculateNewGoal(true);
     }
 

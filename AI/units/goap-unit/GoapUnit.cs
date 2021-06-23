@@ -17,7 +17,8 @@ public class GoapUnit : KinematicBody2D
     public override void _Ready()
     {
         availableActions = new List<IReGoapAction<string, object>>();
-        foreach(var actionNode in GetNode("AI/Actions").GetChildren()) {
+        foreach (var actionNode in GetNode("AI/Actions").GetChildren())
+        {
             availableActions.Add(((IAgentAction)actionNode).GoapAction);
         }
         availableActions.Add(new GoToAction(this.moveToPointSystem));
@@ -34,19 +35,23 @@ public class GoapUnit : KinematicBody2D
             moveToPointSystem.Move(this, 100);
         }
 
-        foreach (var goal in availableGoals) {
-            if (goal is GoapGoalAdvanced<string, object>) {
+        foreach (var goal in availableGoals)
+        {
+            if (goal is GoapGoalAdvanced<string, object>)
+            {
                 ((GoapGoalAdvanced<string, object>)goal).Update();
             }
+        }
+
+        if (availableGoals.Count > 0 && GoapAgent.isIdling())
+        {
+            GoapAgent.CalculateGoal();
         }
     }
 
     public void setGoals(List<IReGoapGoal<string, object>> goals)
     {
         availableGoals = goals;
-        // GD.Print("SET_GOAL " + goal.Name);
-        // var newGals = new List<IReGoapGoal<string, object>>();
-        // newGals.Add(goal);
         GoapAgent.SetGoalsSet(availableGoals);
     }
 

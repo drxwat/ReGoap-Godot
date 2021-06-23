@@ -12,11 +12,6 @@ public class GOAP : Node2D
     {
         unit = GetNode<GoapUnit>("GoapUnit");
         targetPosition = GetNode<Position2D>("Position2D");
-
-        // var goals = new List<IReGoapGoal<string, object>>();
-        // goals.Add(new MoveToGoal(targetPosition.GlobalPosition));
-        // goals.Add(new HasItem("Key"));
-        // unit.setGoals(goals);
     }
 
     public override void _Process(float delta)
