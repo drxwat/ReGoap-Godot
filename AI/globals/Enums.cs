@@ -6,6 +6,6 @@ public enum ItemsEnum
     Chest,
     Vase,
     Axe,
-
+    Diamond,
 }
 

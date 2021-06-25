@@ -47,7 +47,7 @@ public class OpenItemGoapAction : GoapAction<string, object>
             var isSuccess = await item.Open();
             if (isSuccess)
             {
-                doneCallback(this);
+                failCallback(this);
             }
             else
             {
@@ -72,7 +72,11 @@ public class OpenItemGoapAction : GoapAction<string, object>
         preconditions.Clear();
         if (stackData.settings.TryGetValue("openItem", out var openItem))
         {
-            preconditions.Set("isAtPosition", ((ItemOpenable)openItem).GlobalPosition);
+            var openableItem = (ItemOpenable)openItem;
+            preconditions.Set("isAtPosition", openableItem.GlobalPosition);
+            if (openableItem.openableWithItem != ItemsEnum.None) {
+                preconditions.Set("hasItem" + ItemHelper.GetItemNameByType(openableItem.openableWithItem), true);
+            }
         }
         return preconditions;
     }

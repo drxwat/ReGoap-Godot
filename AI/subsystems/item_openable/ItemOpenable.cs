@@ -14,6 +14,9 @@ public class ItemOpenable : Item
     [Export]
     public Godot.Collections.Array<ItemsEnum> possibleDrop = new Godot.Collections.Array<ItemsEnum> { };
 
+    [Export]
+    public ItemsEnum openableWithItem = ItemsEnum.None;
+
     // Actual drop that item will produce. Do not work if isRandomDrop=true
     [Export]
     public Godot.Collections.Array<ItemsEnum> drop = new Godot.Collections.Array<ItemsEnum> { };
@@ -33,11 +36,9 @@ public class ItemOpenable : Item
 
     public bool isOpened = false;
 
-
     private static AIGlobals aIGlobals;
 
     private Vector2 dropMargin = new Vector2(20, 20);
-
 
     public ItemOpenable()
     {

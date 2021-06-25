@@ -153,11 +153,11 @@ texture = ExtResource( 8 )
 
 [node name="Key" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
-position = Vector2( -329.182, 266.6 )
+position = Vector2( -328.515, 421.441 )
 
 [node name="Key2" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.917647, 0.286275, 0.921569, 1 )
-position = Vector2( 234.285, 173.626 )
+position = Vector2( 280.867, 186.534 )
 
 [node name="Key3" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.286275, 0.921569, 0.298039, 1 )
@@ -165,25 +165,21 @@ position = Vector2( 386.888, 334.856 )
 
 [node name="Key4" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.419608, 0.286275, 1 )
-position = Vector2( -365.342, 393.567 )
+position = Vector2( -550.217, 413.59 )
 
 [node name="Key5" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.921569, 0.792157, 0.286275, 1 )
-position = Vector2( -277.691, 397.313 )
+position = Vector2( -462.566, 417.336 )
 
 [node name="Key6" parent="." instance=ExtResource( 7 )]
 modulate = Color( 0.286275, 0.847059, 0.921569, 1 )
-position = Vector2( -319.644, 395.814 )
+position = Vector2( -504.519, 415.837 )
 
 [node name="Chest" parent="." instance=ExtResource( 9 )]
-position = Vector2( -316.116, 227.055 )
+position = Vector2( -188.717, 288.79 )
 
 [node name="Vase" parent="." instance=ExtResource( 10 )]
 position = Vector2( -105.996, 174.277 )
-drop = [ 1 ]
-isRandomDrop = false
-BaseOpeningCost = 10.0
-RandomCostPenalty = 5.0
 
 [node name="Vase2" parent="." instance=ExtResource( 10 )]
 position = Vector2( -159.632, 177.573 )
