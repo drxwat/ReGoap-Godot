@@ -22,9 +22,8 @@ public class Bag : Node
 
     public float GetItem(ItemsEnum itemType)
     {
-        var amount = 0f;
-        items.TryGetValue(itemType, out amount);
-        return amount;
+		items.TryGetValue(itemType, out float amount);
+		return amount;
     }
 
 	public Dictionary<ItemsEnum, float> GetItems() => items;
