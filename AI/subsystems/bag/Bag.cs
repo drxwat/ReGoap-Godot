@@ -9,7 +9,7 @@ public class Bag : Node
     [Signal]
     protected delegate ItemsEnum ItemRemoved();
 
-    private Dictionary<ItemsEnum, float> items = new Dictionary<ItemsEnum, float>();
+    private readonly Dictionary<ItemsEnum, float> items = new Dictionary<ItemsEnum, float>();
 
     public void AddItem(ItemsEnum itemType, float amount)
     {

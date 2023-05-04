@@ -31,7 +31,7 @@ public class OpenItemAction : Node, IAgentAction
 public class OpenItemGoapAction : GoapAction<string, object>
 {
 
-	private HashSet<ItemsEnum> openableItems;
+	private readonly HashSet<ItemsEnum> openableItems;
 	public OpenItemGoapAction(HashSet<ItemsEnum> _openableItems) : base("OpenItemAction")
 	{
 		openableItems = _openableItems;
