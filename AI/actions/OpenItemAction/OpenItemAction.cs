@@ -60,12 +60,10 @@ public class OpenItemGoapAction : GoapAction<string, object>
 		}
 	}
 
-	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
-	{
-		return base.CheckProceduralCondition(stackData) &&
+	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData) => 
+		base.CheckProceduralCondition(stackData) &&
 			stackData.settings.HasKey("openItem") &&
 			stackData.settings.HasKey("dropItem");
-	}
 
 	public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
 	{

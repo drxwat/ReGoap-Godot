@@ -27,10 +27,8 @@ public class AgentBagSensor : Node, IAgentSensor
 		bag.Connect("ItemRemoved", this, "onItemDelete");
 	}
 
-	public void OnItemAdd(ItemsEnum itemType)
-	{
+	public void OnItemAdd(ItemsEnum itemType) => 
 		((BagSensor)Sensor).OnItemAdd(itemType);
-	}
 
 	public void onItemDelete(ItemsEnum itemType)
 	{

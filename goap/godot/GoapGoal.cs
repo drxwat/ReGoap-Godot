@@ -16,51 +16,28 @@ public class GoapGoal<T, W> :  IReGoapGoal<T, W>
         protected Queue<ReGoapActionState<T, W>> plan;
         protected IGoapPlanner<T, W> planner;
 
-        public virtual string GetName()
-        {
-            return Name;
-        }
+	public virtual string GetName() => Name;
 
-        public virtual float GetPriority()
-        {
-            return Priority;
-        }
+	public virtual float GetPriority() => Priority;
 
-        public virtual bool IsGoalPossible()
-        {
-            return WarnPossibleGoal;
-        }
+	public virtual bool IsGoalPossible() => WarnPossibleGoal;
 
-        public virtual Queue<ReGoapActionState<T, W>> GetPlan()
-        {
-            return plan;
-        }
+	public virtual Queue<ReGoapActionState<T, W>> GetPlan() => plan;
 
-        public virtual ReGoapState<T, W> GetGoalState()
-        {
-            return goal;
-        }
+	public virtual ReGoapState<T, W> GetGoalState() => goal;
 
-        public virtual void SetPlan(Queue<ReGoapActionState<T, W>> path)
-        {
-            plan = path;
-        }
+	public virtual void SetPlan(Queue<ReGoapActionState<T, W>> path) => plan = path;
 
-        public void Run(Action<IReGoapGoal<T, W>> callback)
+	public void Run(Action<IReGoapGoal<T, W>> callback)
         {
         }
 
-        public virtual void Precalculations(IGoapPlanner<T, W> goapPlanner)
-        {
-            planner = goapPlanner;
-        }
+	public virtual void Precalculations(IGoapPlanner<T, W> goapPlanner) => 
+        planner = goapPlanner;
 
-        public virtual float GetErrorDelay()
-        {
-            return ErrorDelay;
-        }
+	public virtual float GetErrorDelay() => ErrorDelay;
 
-        public static string PlanToString(IEnumerable<IReGoapAction<T, W>> plan)
+	public static string PlanToString(IEnumerable<IReGoapAction<T, W>> plan)
         {
             var result = "GoapPlan(";
             var reGoapActions = plan as IReGoapAction<T, W>[] ?? plan.ToArray();
@@ -74,8 +51,5 @@ public class GoapGoal<T, W> :  IReGoapGoal<T, W>
             return result;
         }
 
-        public override string ToString()
-        {
-            return string.Format("GoapGoal('{0}')", Name);
-        }
+	public override string ToString() => string.Format("GoapGoal('{0}')", Name);
 }

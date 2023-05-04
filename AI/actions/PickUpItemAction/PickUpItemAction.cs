@@ -60,10 +60,8 @@ public class PickUpItemGoapAction : GoapAction<string, object>
 		}
 	}
 
-	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
-	{
-		return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("pickUpItem");
-	}
+	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData) => 
+		base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("pickUpItem");
 
 	public override ReGoapState<string, object> GetPreconditions(GoapActionStackData<string, object> stackData)
 	{

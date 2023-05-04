@@ -27,12 +27,9 @@ public class Bag : Node
         return amount;
     }
 
-    public Dictionary<ItemsEnum, float> GetItems()
-    {
-        return items;
-    }
+	public Dictionary<ItemsEnum, float> GetItems() => items;
 
-    public void RemoveItem(ItemsEnum itemType, float amount)
+	public void RemoveItem(ItemsEnum itemType, float amount)
     {
         if (items[itemType] >= 0)
         {

@@ -18,12 +18,9 @@ public class ReGoapPlannerThread<T, W>
         this.onDonePlan = onDonePlan;
     }
 
-    public void Stop()
-    {
-        isRunning = false;
-    }
+	public void Stop() => isRunning = false;
 
-    public void MainLoop()
+	public void MainLoop()
     {
         while (isRunning)
         {

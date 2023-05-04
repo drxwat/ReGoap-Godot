@@ -2,13 +2,11 @@ using Godot;
 using System;
 
 public static class ItemHelper {
-    public static string GetItemNameByType(ItemsEnum type) {
-        return Enum.GetName(typeof(ItemsEnum), type);
-    }
+	public static string GetItemNameByType(ItemsEnum type) => 
+        Enum.GetName(typeof(ItemsEnum), type);
 
-    public static ItemsEnum GetItemTypeByName(string name) {
-        return (ItemsEnum)Enum.Parse(typeof(ItemsEnum), name);
-    }
+	public static ItemsEnum GetItemTypeByName(string name) => 
+        (ItemsEnum)Enum.Parse(typeof(ItemsEnum), name);
 }
 
 public class Item : KinematicBody2D
