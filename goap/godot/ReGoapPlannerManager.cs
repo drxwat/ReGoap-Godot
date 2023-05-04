@@ -67,14 +67,12 @@ public class ReGoapPlannerManager<T, W> : Node
     {
         foreach (var planner in planners)
         {
-            if (planner != null)
-                planner.Stop();
+            planner?.Stop();
         }
         // should wait here?
         foreach (var thread in threads)
         {
-            if (thread != null)
-                thread.Abort();
+            thread?.Abort();
         }
     }
 

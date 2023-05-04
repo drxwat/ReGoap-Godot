@@ -134,7 +134,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 		//var watch = System.Diagnostics.Stopwatch.StartNew();
 		startedPlanning = true;
 		currentReGoapPlanWorker = ReGoapPlannerManager<T, W>.Instance.Plan(this, BlackListGoalOnFailure ? currentGoal : null,
-			currentGoal != null ? currentGoal.GetPlan() : null, OnDonePlanning);
+			currentGoal?.GetPlan(), OnDonePlanning);
 
 		return true;
 	}
@@ -152,8 +152,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 			return;
 		}
 
-		if (currentActionState != null)
-			currentActionState.Action.Exit(null);
+		currentActionState?.Action.Exit(null);
 		currentActionState = null;
 		currentGoal = newGoal;
 		if (startingPlan != null)
@@ -218,9 +217,8 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 			IReGoapAction<T, W> next = null;
 			if (plan.Count > 0)
 				next = plan.Peek().Action;
-			if (previous != null)
-				previous.Action.Exit(currentActionState.Action);
-			currentActionState.Action.Run(previous != null ? previous.Action : null, next, currentActionState.Settings, currentGoal.GetGoalState(), WarnActionEnd, WarnActionFailure);
+			previous?.Action.Exit(currentActionState.Action);
+			currentActionState.Action.Run(previous?.Action, next, currentActionState.Settings, currentGoal.GetGoalState(), WarnActionEnd, WarnActionFailure);
 		}
 	}
 
