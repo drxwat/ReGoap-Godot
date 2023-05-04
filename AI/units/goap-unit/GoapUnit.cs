@@ -37,9 +37,9 @@ public class GoapUnit : KinematicBody2D
 
         foreach (var goal in availableGoals)
         {
-            if (goal is GoapGoalAdvanced<string, object>)
+            if (goal is GoapGoalAdvanced<string, object> advanced)
             {
-                ((GoapGoalAdvanced<string, object>)goal).Update();
+                advanced.Update();
             }
         }
 
