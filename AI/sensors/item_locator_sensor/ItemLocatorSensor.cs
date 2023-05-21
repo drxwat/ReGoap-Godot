@@ -37,15 +37,11 @@ public class ItemLocatorGoapSensor : GoapSensor<string, object>
 		EnableSensor();
 	}
 
-	public void EnableSensor()
-	{
+	public void EnableSensor() => 
 		itemsVision.Subscribe(this.OnItemDetected, this.OnItemDeleted, this.OnItemOpened);
-	}
 
-	public void DisableSensor()
-	{
+	public void DisableSensor() => 
 		itemsVision.UnSubscribe(this.OnItemDetected, this.OnItemDeleted);
-	}
 
 	private void OnItemOpened(ItemOpenable item)
 	{

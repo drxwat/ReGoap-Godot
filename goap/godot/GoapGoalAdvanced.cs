@@ -12,7 +12,7 @@
             {
                 warnCooldown = OS.GetUnixTime() + WarnDelay;
                 var currentGoal = planner.GetCurrentGoal();
-                var plannerPlan = currentGoal == null ? null : currentGoal.GetPlan();
+                var plannerPlan = currentGoal?.GetPlan();
                 var equalsPlan = ReferenceEquals(plannerPlan, plan);
                 var isGoalPossible = IsGoalPossible();
                 // check if this goal is not active but CAN be activated

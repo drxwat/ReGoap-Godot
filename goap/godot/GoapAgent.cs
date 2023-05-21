@@ -46,37 +46,19 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 		CalculateNewGoal(true);
 	}
 
-	public virtual bool IsActive()
-	{
-		return isActive;
-	}
+	public virtual bool IsActive() => isActive;
 
-	public virtual IReGoapGoal<T, W> GetCurrentGoal()
-	{
-		return currentGoal;
-	}
+	public virtual IReGoapGoal<T, W> GetCurrentGoal() => currentGoal;
 
 
-	public virtual List<ReGoapActionState<T, W>> GetStartingPlan()
-	{
-		return startingPlan;
-	}
+	public virtual List<ReGoapActionState<T, W>> GetStartingPlan() => startingPlan;
 
 
-	public virtual W GetPlanValue(T key)
-	{
-		return planValues[key];
-	}
+	public virtual W GetPlanValue(T key) => planValues[key];
 
-	public virtual bool HasPlanValue(T key)
-	{
-		return planValues.ContainsKey(key);
-	}
+	public virtual bool HasPlanValue(T key) => planValues.ContainsKey(key);
 
-	public virtual void SetPlanValue(T key, W value)
-	{
-		planValues[key] = value;
-	}
+	public virtual void SetPlanValue(T key, W value) => planValues[key] = value;
 
 	public virtual List<IReGoapGoal<T, W>> GetGoalsSet()
 	{
@@ -85,20 +67,12 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 		return possibleGoals;
 	}
 
-	public virtual List<IReGoapAction<T, W>> GetActionsSet()
-	{
-		return actions;
-	}
+	public virtual List<IReGoapAction<T, W>> GetActionsSet() => actions;
 
-	public virtual IReGoapMemory<T, W> GetMemory()
-	{
-		return memory;
-	}
+	public virtual IReGoapMemory<T, W> GetMemory() => memory;
 
-	public virtual ReGoapState<T, W> InstantiateNewState()
-	{
-		return ReGoapState<T, W>.Instantiate();
-	}
+	public virtual ReGoapState<T, W> InstantiateNewState() => 
+		ReGoapState<T, W>.Instantiate();
 
 	// Sets All available goals for the Agent
 	public virtual void SetGoalsSet(List<IReGoapGoal<T, W>> _goals)
@@ -160,7 +134,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 		//var watch = System.Diagnostics.Stopwatch.StartNew();
 		startedPlanning = true;
 		currentReGoapPlanWorker = ReGoapPlannerManager<T, W>.Instance.Plan(this, BlackListGoalOnFailure ? currentGoal : null,
-			currentGoal != null ? currentGoal.GetPlan() : null, OnDonePlanning);
+			currentGoal?.GetPlan(), OnDonePlanning);
 
 		return true;
 	}
@@ -178,8 +152,7 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 			return;
 		}
 
-		if (currentActionState != null)
-			currentActionState.Action.Exit(null);
+		currentActionState?.Action.Exit(null);
 		currentActionState = null;
 		currentGoal = newGoal;
 		if (startingPlan != null)
@@ -244,9 +217,8 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 			IReGoapAction<T, W> next = null;
 			if (plan.Count > 0)
 				next = plan.Peek().Action;
-			if (previous != null)
-				previous.Action.Exit(currentActionState.Action);
-			currentActionState.Action.Run(previous != null ? previous.Action : null, next, currentActionState.Settings, currentGoal.GetGoalState(), WarnActionEnd, WarnActionFailure);
+			previous?.Action.Exit(currentActionState.Action);
+			currentActionState.Action.Run(previous?.Action, next, currentActionState.Settings, currentGoal.GetGoalState(), WarnActionEnd, WarnActionFailure);
 		}
 	}
 
@@ -297,9 +269,6 @@ public class GoapAgent<T, W> : IReGoapAgent<T, W>
 		}
 	}
 
-	public override string ToString()
-	{
-		return string.Format("GoapAgent('{0}')", Name);
-	}
+	public override string ToString() => string.Format("GoapAgent('{0}')", Name);
 
 }

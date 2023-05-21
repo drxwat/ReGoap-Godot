@@ -9,7 +9,7 @@ public class Bag : Node
     [Signal]
     protected delegate ItemsEnum ItemRemoved();
 
-    private Dictionary<ItemsEnum, float> items = new Dictionary<ItemsEnum, float>();
+    private readonly Dictionary<ItemsEnum, float> items = new Dictionary<ItemsEnum, float>();
 
     public void AddItem(ItemsEnum itemType, float amount)
     {
@@ -22,17 +22,13 @@ public class Bag : Node
 
     public float GetItem(ItemsEnum itemType)
     {
-        var amount = 0f;
-        items.TryGetValue(itemType, out amount);
-        return amount;
+		items.TryGetValue(itemType, out float amount);
+		return amount;
     }
 
-    public Dictionary<ItemsEnum, float> GetItems()
-    {
-        return items;
-    }
+	public Dictionary<ItemsEnum, float> GetItems() => items;
 
-    public void RemoveItem(ItemsEnum itemType, float amount)
+	public void RemoveItem(ItemsEnum itemType, float amount)
     {
         if (items[itemType] >= 0)
         {

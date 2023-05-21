@@ -8,13 +8,13 @@ public class ItemsVision : Area2D
     [Export]
     public float Radius = 250.0f;
 
-    private List<Action<Item>> subscribersOnAdd = new List<Action<Item>>();
-    private List<Action<Item>> subscribersOnDelete = new List<Action<Item>>();
+    private readonly List<Action<Item>> subscribersOnAdd = new List<Action<Item>>();
+    private readonly List<Action<Item>> subscribersOnDelete = new List<Action<Item>>();
 
-    private List<Action<ItemOpenable>> subscribersOnOpen = new List<Action<ItemOpenable>>();
+    private readonly List<Action<ItemOpenable>> subscribersOnOpen = new List<Action<ItemOpenable>>();
 
 
-    private List<Item> knownItems = new List<Item>();
+    private readonly List<Item> knownItems = new List<Item>();
 
     public override void _Ready()
     {

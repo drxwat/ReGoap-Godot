@@ -12,19 +12,10 @@ public class Agent : GoapAgent<string, object>
 
     }
 
-    public bool isIdling()
-    {
-        return currentActionState == null && !IsPlanning;
-    }
+	public bool isIdling() => currentActionState == null && !IsPlanning;
 
-    public bool CalculateGoal()
-    {
-        return CalculateNewGoal();
-    }
+	public bool CalculateGoal() => CalculateNewGoal();
 
-    public bool ForceCalculateNewGoal()
-    {
-        return CalculateNewGoal(true);
-    }
+	public bool ForceCalculateNewGoal() => CalculateNewGoal(true);
 
 }

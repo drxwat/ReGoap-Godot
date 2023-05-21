@@ -31,57 +31,33 @@ public class GoapAction<T, W> : IReGoapAction<T, W>
         settings = ReGoapState<T, W>.Instantiate();
     }
 
-    public virtual bool IsActive()
-    {
-        return enabled;
-    }
+	public virtual bool IsActive() => enabled;
 
-    public virtual void PostPlanCalculations(IReGoapAgent<T, W> goapAgent)
-    {
+	public virtual void PostPlanCalculations(IReGoapAgent<T, W> goapAgent) => 
         agent = goapAgent;
-    }
 
-    public virtual bool IsInterruptable()
-    {
-        return true;
-    }
+	public virtual bool IsInterruptable() => true;
 
-    public virtual void AskForInterruption()
-    {
-        interruptWhenPossible = true;
-    }
+	public virtual void AskForInterruption() => interruptWhenPossible = true;
 
-    public virtual void Precalculations(GoapActionStackData<T, W> stackData)
-    {
+	public virtual void Precalculations(GoapActionStackData<T, W> stackData) => 
         agent = stackData.agent;
-    }
 
-    public virtual List<ReGoapState<T, W>> GetSettings(GoapActionStackData<T, W> stackData)
-    {
-        return new List<ReGoapState<T, W>> { settings };
-    }
+	public virtual List<ReGoapState<T, W>> GetSettings(GoapActionStackData<T, W> stackData) => 
+        new List<ReGoapState<T, W>> { settings };
 
-    public virtual ReGoapState<T, W> GetPreconditions(GoapActionStackData<T, W> stackData)
-    {
-        return preconditions;
-    }
+	public virtual ReGoapState<T, W> GetPreconditions(GoapActionStackData<T, W> stackData) => 
+        preconditions;
 
-    public virtual ReGoapState<T, W> GetEffects(GoapActionStackData<T, W> stackData)
-    {
-        return effects;
-    }
+	public virtual ReGoapState<T, W> GetEffects(GoapActionStackData<T, W> stackData) => 
+        effects;
 
-    public virtual float GetCost(GoapActionStackData<T, W> stackData)
-    {
-        return Cost;
-    }
+	public virtual float GetCost(GoapActionStackData<T, W> stackData) => Cost;
 
-    public virtual bool CheckProceduralCondition(GoapActionStackData<T, W> stackData)
-    {
-        return true;
-    }
+	public virtual bool CheckProceduralCondition(GoapActionStackData<T, W> stackData) => 
+        true;
 
-    public virtual void Run(IReGoapAction<T, W> previous, IReGoapAction<T, W> next, ReGoapState<T, W> settings,
+	public virtual void Run(IReGoapAction<T, W> previous, IReGoapAction<T, W> next, ReGoapState<T, W> settings,
         ReGoapState<T, W> goalState, Action<IReGoapAction<T, W>> done, Action<IReGoapAction<T, W>> fail)
     {
         interruptWhenPossible = false;
@@ -102,22 +78,13 @@ public class GoapAction<T, W> : IReGoapAction<T, W>
     {
     }
 
-    public virtual void Exit(IReGoapAction<T, W> next)
-    {
-        enabled = false;
-    }
+	public virtual void Exit(IReGoapAction<T, W> next) => enabled = false;
 
-    public virtual string GetName()
-    {
-        return Name;
-    }
+	public virtual string GetName() => Name;
 
-    public override string ToString()
-    {
-        return string.Format("GoapAction('{0}')", Name);
-    }
+	public override string ToString() => string.Format("GoapAction('{0}')", Name);
 
-    public virtual string ToString(GoapActionStackData<T, W> stackData)
+	public virtual string ToString(GoapActionStackData<T, W> stackData)
     {
         string result = string.Format("GoapAction('{0}')", Name);
         if (stackData.settings != null && stackData.settings.Count > 0)

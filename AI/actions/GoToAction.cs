@@ -24,10 +24,8 @@ public class GoToAction : GoapAction<string, object>
 		//     failCallback(this);
 	}
 
-	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData)
-	{
-		return base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("objectivePosition");
-	}
+	public override bool CheckProceduralCondition(GoapActionStackData<string, object> stackData) => 
+		base.CheckProceduralCondition(stackData) && stackData.settings.HasKey("objectivePosition");
 
 	public override ReGoapState<string, object> GetEffects(GoapActionStackData<string, object> stackData)
 	{
@@ -65,10 +63,7 @@ public class GoToAction : GoapAction<string, object>
 		return base.GetCost(stackData) + Cost + distance;
 	}
 
-	protected virtual void OnFailureMovement()
-	{
-		failCallback(this);
-	}
+	protected virtual void OnFailureMovement() => failCallback(this);
 
 	protected virtual void OnDoneMovement()
 	{
